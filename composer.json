@@ -18,7 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Gupalo\\Tests\\SymfonyResponseHelpers\\": "tests/"
+            "Gupalo\\SymfonyResponseHelpers\\Tests\\": "tests/"
         }
     }
 }

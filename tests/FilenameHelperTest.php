@@ -1,6 +1,6 @@
 <?php
 
-namespace Gupalo\Tests\SymfonyResponseHelpers;
+namespace Gupalo\SymfonyResponseHelpers\Tests;
 
 use Gupalo\SymfonyResponseHelpers\FilenameHelper;
 use PHPUnit\Framework\TestCase;
