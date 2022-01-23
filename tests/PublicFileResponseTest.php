@@ -29,10 +29,10 @@ class PublicFileResponseTest extends TestCase
 
     public function testCreate_NotModified(): void
     {
-        $request = (new Request());
-        $request->headers->set('if-none-match', '34faedda08f7e2d732cc28a4f1cee72a');
+        $request = new Request();
+        $request->headers->set('if-none-match', 'd6457b879b925aed75ca089fa9edeb24');
 
-        $response = PublicFileResponse::create(dirname(__DIR__), '.gitignore', $request);
+        $response = PublicFileResponse::create(dirname(__DIR__), 'LICENSE', $request);
         self::assertNotInstanceOf(BinaryFileResponse::class, $response);
         self::assertSame(304, $response->getStatusCode());
         self::assertSame('', $response->getContent());

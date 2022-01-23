@@ -90,7 +90,7 @@ class ContentType
 
     public static function fromExtension(?string $extension): string
     {
-        return self::CONTENT_TYPES[strtolower($extension)] ?? self::CONTENT_TYPES['default'];
+        return self::CONTENT_TYPES[strtolower($extension ?? '')] ?? self::CONTENT_TYPES['default'];
     }
 
     public static function fromFilename(?string $filename): string

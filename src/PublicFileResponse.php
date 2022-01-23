@@ -23,7 +23,7 @@ class PublicFileResponse
             return $response;
         }
 
-        return BinaryFileResponse::create($filename, Response::HTTP_OK, [
+        return new BinaryFileResponse($filename, Response::HTTP_OK, [
             'Content-Type' => ContentType::fromFilename($filename),
             'Expires' => DateUtils::addMinutes(30, DateUtils::create())->format('r'),
             'Cache-Control' => 'public, max-age=1800',

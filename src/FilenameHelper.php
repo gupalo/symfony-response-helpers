@@ -6,6 +6,6 @@ class FilenameHelper
 {
     public static function getExtension(?string $filename): ?string
     {
-        return preg_match('#\.([^./]+)($|\?|\#)#', $filename, $m) ? $m[1] : null;
+        return preg_match('#\.([^./]+)($|\?|\#)#', $filename ?? '', $m) ? $m[1] : null;
     }
 }
