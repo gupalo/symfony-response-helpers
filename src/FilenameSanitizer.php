@@ -21,22 +21,24 @@ class FilenameSanitizer
         return !preg_match('#[\\\\/:"*?<>|]+#', $filename);
     }
 
+    /** @noinspection UnnecessaryCastingInspection */
     public static function sanitizePath(string $filename): string
     {
         $filename = str_replace('\\', '/', $filename);
         $infinity = 100;
         do {
-            $filename = preg_replace('#[\\\\"*?<>|]+#', '-', $filename);
-            $filename = preg_replace('#([\\\\/].*):#', '$1', $filename);
-            $filename = preg_replace('#/\.*/+#', '/', $filename);
-            $filename = preg_replace('#^\.+#', '', $filename);
+            $filename = (string)preg_replace('#[\\\\"*?<>|]+#', '-', $filename);
+            $filename = (string)preg_replace('#([\\\\/].*):#', '$1', $filename);
+            $filename = (string)preg_replace('#/\.*/+#', '/', $filename);
+            $filename = ltrim($filename, '.');
         } while ($infinity-- > 0 || !self::validatePath($filename) || preg_match('#/\.*/#', $filename));
 
         return $filename;
     }
 
+    /** @noinspection UnnecessaryCastingInspection */
     public static function sanitizeFilename(string $filename): string
     {
-        return preg_replace('#[\\\\/:"*?<>|]+#', '-', $filename);
+        return (string)preg_replace('#[\\\\/:"*?<>|]+#', '-', $filename);
     }
 }

@@ -18,7 +18,7 @@ class PublicFileResponseTest extends TestCase
 
         ob_start();
         $response->sendContent();
-        self::assertStringEqualsFile(__FILE__, ob_get_clean());
+        self::assertStringEqualsFile(__FILE__, (string)ob_get_clean());
     }
 
     public function testCreate_NoFile(): void
@@ -33,6 +33,7 @@ class PublicFileResponseTest extends TestCase
         $request->headers->set('if-none-match', 'd6457b879b925aed75ca089fa9edeb24');
 
         $response = PublicFileResponse::create(dirname(__DIR__), 'LICENSE', $request);
+        self::assertNotNull($response);
         self::assertNotInstanceOf(BinaryFileResponse::class, $response);
         self::assertSame(304, $response->getStatusCode());
         self::assertSame('', $response->getContent());

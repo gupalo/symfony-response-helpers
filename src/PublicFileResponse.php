@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PublicFileResponse
 {
-    public static function create(string $dir, string $slug, Request $request = null): ?Response
+    public static function create(string $dir, string $slug, ?Request $request = null): ?Response
     {
         $filename = FilenameSanitizer::sanitizePath($dir . '/' . self::removeQueryParams($slug));
 
@@ -17,7 +17,7 @@ class PublicFileResponse
             return null;
         }
 
-        $etag = md5_file($filename);
+        $etag = (string)md5_file($filename);
         $response = self::getNotModifiedResponse($request, $etag);
         if ($response) {
             return $response;
@@ -31,9 +31,10 @@ class PublicFileResponse
         ]);
     }
 
+    /** @noinspection UnnecessaryCastingInspection */
     private static function removeQueryParams(string $slug): string
     {
-        return preg_replace('#[?\#].*$#', '', $slug);
+        return (string)preg_replace('#[?\#].*$#', '', $slug);
     }
 
     private static function getNotModifiedResponse(?Request $request, string $etag): ?Response
@@ -41,7 +42,7 @@ class PublicFileResponse
         $etags = $request ? $request->getETags() : [];
 
         return (in_array($etag, $etags, true) || in_array(sprintf('"%s"', $etag), $etags, true)) ?
-            (new Response())->setNotModified() :
+            new Response()->setNotModified() :
             null;
     }
 }
